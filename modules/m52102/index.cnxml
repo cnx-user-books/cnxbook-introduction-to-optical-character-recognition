@@ -1,0 +1,16 @@
+<document xmlns="http://cnx.rice.edu/cnxml">
+
+<title>Basics of OCR</title>
+<metadata xmlns:md="http://cnx.rice.edu/mdml">
+  <md:content-id>m52102</md:content-id>
+  <md:title>Basics of OCR</md:title>
+  <md:abstract/>
+  <md:uuid>7f7e421d-0566-450f-8dc4-0d8802a42a84</md:uuid>
+</metadata>
+
+<content>
+  <para id="delete_me">For OCR, we need to assume an image has certain textual characteristics. For example, there is no point in using a picture of a tree as input to text recognition software.</para><para id="eip-679">After reading in an image, the first step to OCR involves preprocessing. Any picture the software reads in can be represented by a matrix of red-green-blue(RGB) values. Rather than deal with three variables, we can make this more computation friendly by converting from RGB to grayscale; instead of a matrix with three separate values in each cell, we now have a matrix of intensity values between 0 and 255.
+</para><para id="eip-634">Another issue is that the images dealt with in OCR are not necessarily properly oriented; they may be skewed, angled, or flipped. This incorrect orientation would make it more difficult for us to correctly classify characters. In order to remedy this, a typical preprocessing requires us to transform and translate the pixels within the image in an attempt to realign the text.</para><para id="eip-263">Depending on our inputs and assumptions, there are multiple options on what we will use as a filter. For our purposes, we will be looking at a few filters meant for edge detection, specifically Gaussian, Laplacian, and Sobel.</para><para id="eip-308">After filtering, we will be utilizing OpenCV's wide array of functions to detect our characters and identify them. The API provided will handle tasks such as defining the threshold of an edge and the actual edge detection. For classifying the characters, OpenCV has a machine learning algorithm, K-Nearest Neighbors that we capitalize on.
+</para></content>
+
+</document>

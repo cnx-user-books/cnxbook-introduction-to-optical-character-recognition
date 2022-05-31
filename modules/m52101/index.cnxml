@@ -1,0 +1,16 @@
+<document xmlns="http://cnx.rice.edu/cnxml">
+
+<title>Future Work</title>
+<metadata xmlns:md="http://cnx.rice.edu/mdml">
+  <md:content-id>m52101</md:content-id>
+  <md:title>Future Work</md:title>
+  <md:abstract/>
+  <md:uuid>0e856eb9-5c86-4686-9d15-f330e940017c</md:uuid>
+</metadata>
+
+<content>
+  <para id="delete_me">In the future we hope to expand our tutorial to take into account the multitude of techniques that can be applied during each step of the OCR project, ranging from filtering and edge detection to feature extraction and classification.</para><para id="eip-436">More specifically, we would implement support vector machines and logistic regression as two different learning models in addition to k-nearest neighbors, and show users how the results compare using each of these models. 
+Pertaining to the data we handle, we would like to incorporate handwritten characters into our training data and to introduce noise into our images of typed text (by printing them and then scanning the printed images).
+We would also like to create a confusion matrix for the multiple implementations of OCR we would like to develop to assess their performance.</para><para id="eip-333">And finally, we look forward to taking ELEC 345: Computer Vision to expand our knowledge of the topic.</para></content>
+
+</document>

@@ -1,0 +1,100 @@
+<document xmlns="http://cnx.rice.edu/cnxml">
+
+<title>Tutorial</title>
+<metadata xmlns:md="http://cnx.rice.edu/mdml">
+  <md:content-id>m52105</md:content-id>
+  <md:title>Tutorial</md:title>
+  <md:abstract/>
+  <md:uuid>27adbea4-de53-49cf-86fd-2592b13cb77b</md:uuid>
+</metadata>
+
+<content>
+  <section id="eip-226"><title>Preparation</title><para id="eip-387">All files referenced and other helpful information is posted on this <link url="http://xyh1.github.io/RiceU_ELEC301_OCR_Training/" window="new">site</link> at the GitHub link. The GitHub link also has 3 Python files, which is our completed OCR software. This tutorial serves as a walkthrough of the code under recognitionScript.py, where more in-depth explanations are discussed in the provided .py files.</para><para id="eip-582">This tutorial uses Python 2.7, Numpy, and OpenCV for the software development portions. The instructions for downloading OpenCV for Linux can be found at <link url="https://github.com/xyh1/RiceU_ELEC301_OCR_Training/blob/master/Installation%20Instructions/OpenCV%20Instructions.txt" window="new">this link.</link>
+For windows, go to to <link url="https://opencv.org" window="new">opencv.org</link>
+For Numpy, visit <link url="www.numpy.org">numpy.org</link>
+
+For Python, visit <link url="https://www.python.org" window="new">python.org</link></para><para id="eip-905">We assume the reader will have been exposed to Python before. If not, a general understanding of Python IO and the ability to look up Python documentation is preferable.</para></section><section id="eip-908"><title>Preprocessing</title><para id="eip-773">For our tutorial, we will make a few assumptions for our input images. First off, the image will only have printed text. We also assume the image will be a png. For example, we will have pictures similar to the figure below.
+
+  <media id="Sample" alt="Sample image" display="block">
+    <image mime-type="image/png" src="../../media/test.png"/>
+  </media>
+
+Because this is an introduction, there will not be information on transforming and translating, as this involves verbose algorithms beyond the scope of our knowledge.</para><para id="eip-213">Second, images may contain the full range of colors.</para><para id="eip-428">The first step is to read in the image we will be performing OCR on. OpenCV has the ability to do this with imread() function. We have made a wrapper function that does this and returns a copy, which will be necessary for some OpenCV functions
+
+
+</para><para id="eip-233"><media id="Readin" alt="Reading in image">
+    <image mime-type="image/png" src="../../media/read.png"/>
+  </media></para><para id="eip-516">Right now, im is an image, which can be represented as a matrix with pixels. Each pixel is some object with 3 values, red, blue, green(rgb). In order to make this compatible with future functions, we will convert the image to grayscale. This involves a function provided by OpenCV, which process the rgb values and replace the pixel with some intensity value. The next step is to convert the image into grayscale. Open Cv has a color converting function called Cv2.cvtColor(image, code ) which can map one type of color to another based on the input code. For the purposes of converting our image into grayscale we use the parameter Cv2.COLOR_BGR2GRAY and call our the helper function color2gray, which returns the grayscaled image.
+</para><para id="eip-846"><media id="Converting" alt="Convering color to gray">
+    <image mime-type="image/png" src="../../media/color2gray.png"/>
+  </media></para><para id="eip-439"><media id="Greyed" alt="Greyscale" display="block">
+    <image mime-type="image/png" src="../../media/gray.png"/>
+  </media>
+Above is our grayscaled image.</para></section><section id="eip-840"><title>Filtering</title><para id="eip-874">Next, we will need to apply a filter onto the image. Depending on the task, we could use many different filters to achieve a certain goal. We want to filter our image to increase our ability to detect edges; this allows us to identify characters in the image. Therefore, we will be covering the Gaussian, Laplacian, and Sobel filters.</para><para id="eip-611"><title>Gaussian Filter</title>Using the following formula, we will create some n by n matrix to build the Gaussian filter.
+
+</para><para id="eip-880"><media id="gaussss" alt="gaussss">
+    <image mime-type="image/png" src="../../media/gauss.png"/>
+  </media></para><para id="eip-519">The Gaussian filter is effective towards noisy signals, because of its characteristic as also being a low pass filter. By blurring the image to a small degree, we allow any sensitive edge detection algorithms to not mistake noise to be something of significance.</para><para id="eip-909"><title>Laplace</title>In cases where we know that noise is not an issue, we can use the Laplacian filer. Rather than worry about reducing noise, the Laplace filter's purpose is to enhance edges by sharpening the image. The formula to describe the filter is</para><para id="eip-459"><media id="laplaceee" alt="laplace">
+    <image mime-type="image/gif" src="../../media/laplace.gif"/>
+  </media></para><para id="eip-546">Because this filter serves to enhance the features of an image, this also increases noise. </para><para id="eip-859"><title>Sobel</title>Sobel filtering involves using two 3 by 3 matrices to convolve with the image in order to find the gradient of the image. Although this may be an inaccurate approximation, it proves effective for our needs.</para><para id="eip-44"><media id="Sobel" alt="Sobel">
+    <image mime-type="image/png" src="../../media/sobel.png"/>
+  </media></para><para id="eip-198">After testing with multiple files, we had come to the Gaussian filter was best suited for the current data sets. There is a convenient OpenCV function that does this, Cv2.gaussianBlur( .. ). With appropriate parameters: the width and height of the matrix that will be used to filter the image and the standard deviation of the Gaussian in the x and y directions (the greater standard deviation the less variance among the pixels after filter, i.e. greater blur)
+</para><para id="eip-788"><media id="Blurring" alt="Blurring code">
+    <image mime-type="image/png" src="../../media/blurcde.png"/>
+  </media></para><para id="eip-935"><media id="Blur" alt="Blurred" display="block">
+    <image mime-type="image/png" src="../../media/blur.png"/>
+  </media>
+Above is our blurred image.</para></section><section id="eip-255"><title>Feature Detection</title><para id="eip-132">The next step is to determine where the edges in the image exist. After filtering, there needs to be some way to take each character and define its features in some measurable value. Under OpenCV, we used the adaptiveThreshold function to take our image and decide whether a certain intensity value in the image should be a 0 or 1. Effectively, our processed image is currently a matrix of binary values. We have the provided helper function.
+</para><para id="eip-648"><media id="Thresh_Code" alt="Adaptive Threshold code">
+    <image mime-type="image/png" src="../../media/adaptiveThresh.png"/>
+  </media></para><para id="eip-942">In deciding whether a pixel meets the threshold there are two methods: we can use an adaptive mean 
+
+filter or a Gaussian. We found a Gaussian was better.
+
+The threshold type <emphasis>should</emphasis> be cv2.THRESH_BINARY_INV which turns inverts the values-pixels deemed 
+
+white become black and vice versa. This is because Open Cv’s edge finding functions find white 
+
+characters in black backgrounds.</para><para id="eip-684"><media id="Threshold" alt="Threshold" display="block">
+    <image mime-type="image/png" src="../../media/thresh.png"/>
+  </media>
+Above shows the adaptive threshold of the image.</para><para id="eip-857">From here, we can use OpenCV's findContours method to find the edges. This will return coordinates, width, and height of a rectangle around a character. Given specific properties, some rectangles may be removed, resized, or combined to accomodate special cases.
+</para><para id="eip-223"><media id="Find_Contours" alt="Finding the contours">
+    <image mime-type="image/png" src="../../media/findContours.png"/>
+  </media></para><para id="eip-162">Afterwards, we call the following two helper functions, findContoursAreas() and removeOverlaps().
+
+findContoursAreas removes countours in the list contourlist that do not meet a specified minimum height. We use this to 
+
+ignore small contours, like the tittles around ‘i’s and ‘j’s.</para><para id="eip-529">removeOverlaps goes through the rectangles list and returns a list of contours(rectangles) that do not 
+
+overlap, returning the largest rectangle if overlap does occur.
+
+This is necessary because the list findContourAreas returns all countours in a image, even those that do 
+
+define an actual character.For example contours that make up part of a letter like the “o” in p  would be 
+
+included in addition to the contour that we want that encloses the “p.”
+
+We then sort the list to our liking so we can read the remaining letter outlines left to right, top to 
+
+bottom. We do this with trainingHelper.xsort( countour_list ). It uses a simple algorithm to sort the 
+
+rectangles into sorted rows and then into columns.</para><para id="eip-264"><media id="Edge" alt="Edge detection" display="block">
+    <image mime-type="image/png" src="../../media/oi.png"/>
+  </media>
+Above shows the code discovering the region of interests.</para><para id="eip-767">Taking each rectangle, we will create a vector to hold the features each image has. First, we use a resize method to convert each rectangle into a n by n matrix of values. The values is determined by dividing the image to n by n cells and returning the average intensity of each cell. From here, we turn the n x n matrix into a row vector. We can then add other features to this vector in order to determine the character. For example, take the average of the top half and the bottom half of the image.
+
+</para><para id="eip-347"><media id="Roi" alt="ROI Code block">
+    <image mime-type="image/png" src="../../media/roi.png"/>
+  </media></para></section><section id="eip-266"><title>Classification</title><para id="eip-536">To classify an image, there needs to be a referenced database to compare the characters to. Our provided code solves this through the training method, which uses machine learning. Using multiple sets of pictures, we take an image, run it through all of the steps above and tell the program what the character should be. When finished, we have training data, which holds a histogram of vectors mapped to specific characters.
+
+<media id="Train" alt="Training data" display="block">
+    <image mime-type="image/png" src="../../media/train.png"/>
+  </media>
+</para><para id="eip-613">Back to the current image, we take its feature vector and use a k-nearest neighbor algorithm to determine which vector is most similar to the one being compared. From there, we see what the vector is mapped to and return what should be the actual letter or number.
+
+<media id="OCR" alt="OCR" display="block">
+    <image mime-type="image/png" src="../../media/ocr.png"/>
+  </media></para><para id="eip-534">And there you have it! Thank you for reading through the introduction of OCR. Feel free to look through the files, as there will be more resources to explain this topic.</para></section></content>
+
+</document>

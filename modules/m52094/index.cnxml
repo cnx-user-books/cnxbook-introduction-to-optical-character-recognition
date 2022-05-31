@@ -1,0 +1,15 @@
+<document xmlns="http://cnx.rice.edu/cnxml">
+
+<title>Introduction</title>
+<metadata xmlns:md="http://cnx.rice.edu/mdml">
+  <md:content-id>m52094</md:content-id>
+  <md:title>Introduction</md:title>
+  <md:abstract/>
+  <md:uuid>e2999864-ce4a-4793-9080-baab45e0bb29</md:uuid>
+</metadata>
+
+<content>
+  <para id="eip-324">Optical character recognition, or OCR for short, is applicable to a variety of fields and problems. Take the example of recognizing the license plates of cars running red lights caught by speeding cameras. Using OCR, we might determine the characters on the license plate of the speeding car.</para><para id="eip-443">Initially, we were planning on doing a project along the lines of license plate recognition. By developing an application that could recognize the characters on a license plate, we would be able to automate the billing process for cars caught by speeding cameras, for example. However, as we searched the Internet for tutorials on how to perform optical character recognition (OCR), we had difficulty finding a fully comprehensive one that taught us how to train an algorithm on a custom dataset and then perform character recognition on similar images. We did find MNIST, a database of handwritten digits, but it does not include letters, nor does it pertain to the artificial text on license plates. As a result, we decided we would make our own tutorial.
+</para><para id="eip-817">Our main goal was to create a general step-by-step, easy-to-use tutorial to optical character recognition by performing basic techniques available in Python’s OpenCV library on a simple data set, to be uploaded to Connexions as a contribution to the open education movement.</para><para id="eip-130">As a result, we decided that we would perform OCR on typed-text input in png and jpeg files as our valid input, with the letters of the alphabet (both capital and lowercase) and digits 0-9 as our classes of characters.</para></content>
+
+</document>

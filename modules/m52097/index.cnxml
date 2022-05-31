@@ -1,0 +1,14 @@
+<document xmlns="http://cnx.rice.edu/cnxml">
+
+<title>Methodology and Design Choices</title>
+<metadata xmlns:md="http://cnx.rice.edu/mdml">
+  <md:content-id>m52097</md:content-id>
+  <md:title>Methodology and Design Choices</md:title>
+  <md:abstract/>
+  <md:uuid>0d399cbc-49b5-4074-a7e5-432241684cc2</md:uuid>
+</metadata>
+
+<content>
+  <para id="delete_me">We decided to create our tutorial in Python using the open source computer vision library, OpenCV, for its ease of use and minimal barrier to entry – Python is free, where Matlab is not, and Python is easier to learn than C++ for beginners. OpenCV, being open-source, is well documented in its functionality, though it lacks the kind of comprehensive tutorial we have developed. </para><para id="eip-883">When determining how to implement our tutorial, we decided we would keep the methods and training data simple. Our input consisted of clean images of typed text to teach the user how OCR can work for typed characters – the letters of the alphabet and numbers in this case. We decided that it would be simplest if we used images and characters with the correct orientation as well.</para><para id="eip-652">The feature vector we used was a vector of the average intensity values of each character after resizing it to a standard size because this was simple to implement in OpenCV.</para><para id="eip-436">For machine learning models, we went with the k-nearest neighbors (KNN) algorithm (with k=1) because KNN is easier to implement and explain than support vector machines. We settled on k=1, or finding the single nearest neighbor, because we found that it produced optimal results, probably because of the relatively small size of our training data set; we only trained on 15 fonts. Also, since we would ideally be training on a variety of fonts, the boundaries between clusters of characters of each class might not be quite as easily defined, especially in the case of similar characters like O and 0, which would lend to KNN being more effective than SVM.</para></content>
+
+</document>

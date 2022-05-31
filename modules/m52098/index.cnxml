@@ -1,0 +1,18 @@
+<document xmlns="http://cnx.rice.edu/cnxml">
+
+<title>Results &amp; Conclusion</title>
+<metadata xmlns:md="http://cnx.rice.edu/mdml">
+  <md:content-id>m52098</md:content-id>
+  <md:title>Results &amp; Conclusion</md:title>
+  <md:abstract/>
+  <md:uuid>9c57a439-6e80-4747-b9f0-a5e60e5fa68b</md:uuid>
+</metadata>
+
+<content>
+  <para id="delete_me">By the end of the project, we had developed an introductory tutorial to the processes and algorithms involved in OCR.
+</para><para id="eip-858">With the methods we implemented, we were able to achieve little to no error when testing on our training data, and when testing on fonts not included in our training data set but in one of the font families included in the training set, we were able to achieve about 85% accuracy. 
+</para><para id="eip-452"><media id="OCRPoster" alt="OCR Poster">
+  <download mime-type="application/pdf" src="ocrposter.pdf"/>
+</media></para></content>
+
+</document>
